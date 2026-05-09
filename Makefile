@@ -44,11 +44,5 @@ migrate-create:
 	@mkdir -p ./migrations
 	docker compose run --rm --user "$(UID):$(GID)" todo-app-postgres-migrate create -ext sql -dir /migrations -seq $(name)
 
-migrate-up:
-	make migrate-action action=up
-
-migrate-down:
-	make migrate-action action=down
-
 migrate-action:
 	docker compose run --rm todo-app-postgres-migrate -path /migrations -database "postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@todo-app-postgres:5432/$(POSTGRES_DB)?sslmode=disable" $(action)
